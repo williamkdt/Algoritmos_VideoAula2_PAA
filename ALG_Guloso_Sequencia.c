@@ -5,9 +5,8 @@
 int VerDir (int grid[N][N], int i, int j){
     if(i >= N || j+1 >= N)
         return 0;
-    else if((grid[i][j] == (grid[i][j+1])-1) || (grid[i][j] == (grid[i][j+1])+1)){
+    else if(abs(grid[i][j] - grid[i][j+1]) == 1)
         return 1;
-    }
     else
         return 0;
 }
@@ -15,9 +14,8 @@ int VerDir (int grid[N][N], int i, int j){
 int VerBx (int grid[N][N], int i, int j){
     if(i+1 >= N || j >= N)
         return 0;
-    else if((grid[i][j] == (grid[i+1][j])-1) || (grid[i][j] == (grid[i+1][j])+1)){
+    else if(abs(grid[i][j] - grid[i+1][j]) == 1)
         return 1;
-    }
     else
         return 0;
 }
@@ -31,14 +29,10 @@ void SEQUENCIA(int grid[N][N]){
         if((VerDir(grid, i, j)) && (VerBx(grid, i, j))){
             dir = 0;
             bx = 0;
-            if(VerDir(grid, i, j+1))
-                dir++;
-            if(VerBx(grid, i, j+1))
-                dir++;
-            if(VerDir(grid, i+1, j))
-                bx++;
-            if(VerBx(grid, i+1, j))
-                bx++;
+            dir += VerDir(grid, i, j+1);
+            dir += VerBx(grid, i, j+1);
+            bx += VerDir(grid, i+1, j);
+            bx += VerBx(grid, i+1, j);
 
             printf("%d - ", grid[i][j]);
             seq++;
@@ -72,7 +66,7 @@ void SEQUENCIA(int grid[N][N]){
         else if((j == N && i < N) && seq == 0){
             i++;
             j=0;
-        }
+            }
         else{
             printf("%d - ", grid[i][j]);
             printf("\n\n\tTamanho da Sequencia: %d",seq+1);
@@ -92,7 +86,7 @@ int main(){
 
     printf("Sequencia Encontrada:\n\n");
     SEQUENCIA(grid);
-    printf("\n\n");
 
+    printf("\n\n");
     return 0;
 }
